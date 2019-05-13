@@ -1,0 +1,90 @@
+import React from 'react';
+import { View, Text, Dimensions, StatusBar, FlatList, Image, ImageBackground } from 'react-native';
+import { Container, Content, Button } from 'native-base';
+import Dialog, { DialogFooter, DialogButton, DialogContent, DialogTitle } from 'react-native-popup-dialog';
+import { styles } from './style';
+import { HeaderContainer } from '../../../components/header';
+
+const { height, width } = Dimensions.get('window')
+class JoinGame extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            visible: false
+        }
+    }
+
+    componentDidMount() {
+
+    }
+    componentWillUnmount() {
+
+    }
+    onActionJoin = () => {
+        this.setState({ visible: true });
+    }
+    onTapJoin = () => {
+        this.setState({ visible: false }, () => this.onGoToHomeScreen());
+    }
+    onTapDecline = () => {
+        this.setState({ visible: false });
+    }
+    onGoToHomeScreen = () => {
+        this.interval = setInterval(
+            () => this.props.navigation.navigate('HomeStack'),
+            500
+        );
+    }
+    render() {
+        const { visible } = this.state;
+        return (
+            <Container style={{ paddingTop: StatusBar.currentHeight }}>
+                <HeaderContainer title="" goBack={false} navigation={this.props.navigation} />
+                <Content contentContainerStyle={styles.contentStyle}>
+                    <View style={{ alignItems: 'center' }}>
+                        <View >
+                            <Text style={{ fontWeight: 'bold', fontSize: 18 }}>WAITING ROOM</Text>
+                        </View>
+                    </View>
+                    <View style={{ backgroundColor: 'tranparent', paddingTop: 20, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                        <View >
+                            <Text style={{ fontSize: 20, color: 'red' }}>{'A new game has begun'}</Text>
+                        </View>
+                        <View style={{ paddingBottom: 5, paddingHorizontal: 5, position: 'absolute', bottom: 50 }}>
+                            <Button block style={[styles.button, styles.activeButton]} onPress={this.onActionJoin} >
+                                <Text style={styles.buttonColor}> Join Game </Text>
+                            </Button>
+                        </View>
+                    </View>
+                </Content>
+                <Dialog
+                    visible={visible}
+                    onTouchOutside={() => {
+                        this.setState({ visible: false });
+                    }}
+                >
+                    <DialogContent>
+                        <View style={{ marginTop: 50, paddingHorizontal: 20 }}>
+                            <Text style={{ fontSize: 20, color: 'red' }}>{'You have been invited to vote'}</Text>
+                        </View>
+                        <View style={{ marginTop: 50, paddingHorizontal: 30 }}>
+                            <Button block style={[styles.button, styles.activeButton]} onPress={this.onTapJoin} >
+                                <Text style={styles.joinBtnTxtColor}> Join </Text>
+                            </Button>
+                        </View>
+
+                        <View style={{ marginTop: 20, marginBottom: 20, paddingHorizontal: 30 }}>
+                            <Button block style={[styles.button, styles.disableButton]} onPress={this.onTapDecline} >
+                                <Text style={styles.declineBtnTxtColor}> Decline </Text>
+                            </Button>
+                        </View>
+                    </DialogContent>
+                </Dialog>
+            </Container>
+        );
+    }
+}
+
+
+export default JoinGame;

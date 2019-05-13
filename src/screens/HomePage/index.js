@@ -76,7 +76,7 @@ class Home extends React.Component {
         const { visible, data } = this.state;
         return (
             <Container style={{ paddingTop: StatusBar.currentHeight }}>
-                <HeaderContainer title="" goBack={true} navigation={this.props.navigation} right={true} rightText={'Time Left: 0:08:45'} />
+                <HeaderContainer goBack={false} navigation={this.props.navigation} leftText={'Score:10'} right={true} rightText={'Time Left: 0:08:45'} />
                 <Content contentContainerStyle={styles.contentStyle}>
                     <View style={{ alignItems: 'center' }}>
                         <View >

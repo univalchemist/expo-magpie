@@ -4,7 +4,7 @@ import { View, Text, Dimensions, Image, PermissionsAndroid, Platform, SafeAreaVi
 import { Container, Header, Content, Form, Item, Input, Button } from 'native-base';
 import images from '../../../assets/images';
 import { styles } from './style';
-class Start extends React.Component {
+class SignUp extends React.Component {
 
     constructor(props) {
         super(props);
@@ -21,7 +21,7 @@ class Start extends React.Component {
 
     }
     submit = () => {
-        this.props.navigation.navigate('HomeScreen');
+        this.props.navigation.navigate('WaitingStack');
     }
     render() {
         const { visible } = this.state;
@@ -62,4 +62,4 @@ class Start extends React.Component {
 }
 
 
-export default Start;
+export default SignUp;

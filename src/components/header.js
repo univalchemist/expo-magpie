@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Header, Left, Body, Right, Button, Icon, Text, Thumbnail } from "native-base";
 const goback = (props) => {
     props.navigation.goBack()
@@ -11,15 +11,24 @@ export const HeaderContainer = (props) => {
                 {
                     props.goBack &&
                     <Button
+                        iconLeft
                         transparent
                         onPress={() => goback(props)}>
                         <Icon name="chevron-left" type='Feather' style={{ color: 'black' }} />
+                        <Text style={styles.rightTxtStyle}>{props.backText}</Text>
                     </Button>
+
+                }
+                {
+                    props.leftText &&
+                    <View style={{ marginLeft: 20 }}>
+                        <Text style={styles.rightTxtStyle}>{props.leftText}</Text>
+                    </View>
                 }
 
             </Left>
             <Body style={styles.body}>
-                
+
             </Body>
             <Right style={styles.right}>
                 {props.right &&
@@ -40,9 +49,9 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0
     },
     body: {
-        flex: 1,
+        flex: 3,
         alignItems: 'center',
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
     },
     textTitle: {
         marginTop: 5,
@@ -50,12 +59,13 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     left: {
-        flex: 2,
+        flex: 4,
         flexDirection: 'row',
         backgroundColor: 'transparent',
     },
     right: {
         flex: 4,
+        backgroundColor: 'transparent',
     },
     rightTxtStyle: {
         color: 'red',
