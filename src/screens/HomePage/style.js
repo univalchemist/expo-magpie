@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
     itemSelectBtn: {
         position: 'absolute',
         bottom: -20,
-        left: 30,
+        left: DEVICE.WIDTH / 8,
         width: 90,
         height: 45,
         backgroundColor: PRIMARYCOLOR.ORANGE,
