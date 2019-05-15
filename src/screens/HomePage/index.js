@@ -1,11 +1,14 @@
 import React from 'react';
-import { View, Text, Dimensions, StatusBar, FlatList, Image, ImageBackground } from 'react-native';
-
+import { View, Text, Dimensions, StatusBar, FlatList, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import { Container, Content, Button } from 'native-base';
+import { ImagePicker, Permissions, } from 'expo';
+
+import Dialog, { DialogContent } from 'react-native-popup-dialog';
+
 import { HeaderContainer } from '../../components/header';
 import { styles } from './style';
 import images from '../../../assets/images';
-const { width, height } = Dimensions.get('window');
+import getPermissionAsync from '../../global/functions';
 class Home extends React.Component {
 
     constructor(props) {
@@ -13,12 +16,12 @@ class Home extends React.Component {
         this.state = {
             visible: false,
             data: [
-                { image: images.pen2, time: '12:23:45', user: 'Capspice1', votes: 0 },
-                { image: images.pen1, time: '12:23:46', user: 'Capspice2', votes: 1 },
-                { image: images.fancy_pen, time: '12:23:47', user: 'Capspice3', votes: 2 },
-                { image: images.pen2, time: '12:23:48', user: 'Capspice4', votes: 3 },
-                { image: images.pen2, time: '12:23:49', user: 'Capspice5', votes: 4 },
-                { image: images.feather_pen, time: '12:23:50', user: 'Capspice6', votes: 5 }
+                { image: images.man1, votes: 0 },
+                { image: images.man2, votes: 1 },
+                { image: images.man3, votes: 2 },
+                { image: images.man4, votes: 3 },
+                { image: images.man2, votes: 4 },
+                { image: images.man1, votes: 5 }
             ]
         }
     }
@@ -29,15 +32,52 @@ class Home extends React.Component {
     componentWillUnmount() {
 
     }
+    takePicture = async () => {
+        if (await getPermissionAsync(Permissions.CAMERA)) {
+            if (await getPermissionAsync(Permissions.CAMERA_ROLL)) {
+                const result = await ImagePicker.launchCameraAsync({
+                    allowsEditing: true,
+                    base64: false,
+                    aspect: [4, 4],
+                });
+                console.log('takePicture result', result);
+                if (!result.cancelled) {
+
+                }
+            }
+
+        }
+    }
+    selectLibrary = async () => {
+        if (await getPermissionAsync(Permissions.CAMERA_ROLL)) {
+            const result = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true,
+                base64: false,
+                aspect: [4, 4],
+            });
+            console.log('selectLibrary result', result);
+            if (!result.cancelled) {
+
+            }
+        }
+    }
+    onSubmit = () => {
+        this.setState({ visible: true });
+    }
+    onActionCamera = () => {
+        this.takePicture();
+    }
+    onActionGallery = () => {
+        this.selectLibrary();
+    }
+    onTapClose = () => {
+        this.setState({ visible: false });
+    }
     renderItem = ({ item, index }) => {
         return (
             <View style={[styles.itemContainer]}>
-                <ImageBackground style={{ flex: 1, flexDirection: 'column', width: width / 2, height: width / 2 + 80 }} resizeMode={'cover'} source={item.image}>
-                    <View style={{ flex: 1, flexDirection: 'row', position: 'absolute', bottom: 30 }}>
-                        <View style={{ flex: 3, alignItems: 'center' }}>
-                            <Text style={{ fontSize: 12 }}>{'Submitted: '}{item.time}</Text>
-                            <Text style={{ fontSize: 12 }}>{'by: '}{item.user}</Text>
-                        </View>
+                <ImageBackground style={styles.itemImg} resizeMode={'cover'} source={item.image}>
+                    <View style={{ flex: 1, position: 'absolute', top: 5, right: 10 }}>
                         <View style={{ flex: 1, alignItems: 'center' }}>
                             <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{item.votes}</Text>
                             <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{'Votes'}</Text>
@@ -45,28 +85,7 @@ class Home extends React.Component {
                     </View>
 
                 </ImageBackground>
-                <View style={{
-                    position: 'absolute',
-                    bottom: -20,
-                    left: 30,
-                    width: 90,
-                    height: 45,
-                    backgroundColor: '#CFFFE5',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flex: 1,
-                    borderRadius: 20,
-
-                    shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: 2,
-                    },
-                    shadowOpacity: 0.34,
-                    shadowRadius: 6.27,
-
-                    elevation: 5,
-                }}>
+                <View style={styles.itemSelectBtn}>
                     <Text>{'SELECT'}</Text>
                 </View>
             </View>
@@ -86,21 +105,58 @@ class Home extends React.Component {
                             <Text>Select your favorite submission</Text>
                         </View>
                     </View>
-                    <View style={{ backgroundColor: 'tranparent', paddingTop: 20, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                    <View style={styles.listContainer}>
                         <FlatList
                             data={data}
                             numColumns={2}
                             contentContainerStyle={styles.container}
-                            keyExtractor={(item) => item.time}
+                            keyExtractor={(item) => item.votes}
                             renderItem={this.renderItem}
                         />
                     </View>
-                    <View style={{ paddingBottom: 5, paddingHorizontal: 5 }}>
-                        <Button block style={[styles.button, styles.activeButton]} >
-                            <Text style={styles.buttonColor}> SUBMIT </Text>
-                        </Button>
+                    <View style={styles.bodyFoot}>
+                        <View style={{ flex: 1, padding: 7.5 }}>
+                            <TouchableOpacity style={styles.submitBtn} onPress={this.onSubmit}>
+                                <Text>{'Submit'}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ flex: 1, padding: 5, alignItems: 'center', justifyContent: 'center' }}>
+                            <TouchableOpacity style={styles.captureBtn} onPress={this.onActionCamera}>
+                                <Image resizeMode={'cover'} source={images.iconCamera}></Image>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ flex: 1, padding: 7.5 }}>
+                            <TouchableOpacity style={styles.submitBtn} onPress={this.onActionGallery}>
+                                <Text>{'Gallery'}</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </Content>
+                <Dialog
+                    visible={visible}
+                    onTouchOutside={() => {
+                        this.setState({ visible: false });
+                    }}
+                >
+                    <DialogContent>
+                        <View style={{ marginTop: 50, paddingHorizontal: 20 }}>
+                            <Text style={styles.winnerTxt}>
+                                {`Winner!`}{"\n"}{'Dr.Drake'}
+                            </Text>
+                        </View>
+                        <View style={{ marginTop: 40, paddingHorizontal: 50 }}>
+                            <Text style={styles.congratulationTxt}>
+                                {'Congratulations'}
+                            </Text>
+                        </View>
+                        <View style={{ marginTop: 40, marginBottom: 20, paddingHorizontal: 50 }}>
+                            <Button block style={[styles.button, styles.activeButton]} onPress={this.onTapClose} >
+                                <Text style={styles.joinBtnTxtColor}> Close </Text>
+                            </Button>
+                        </View>
+
+                    </DialogContent>
+                </Dialog>
             </Container>
         );
     }

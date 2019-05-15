@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native';
+import { PRIMARYCOLOR } from '../../global/style';
 export const styles = StyleSheet.create({
     activeButton: {
-        backgroundColor: '#CFFFE5',//#CFFFE5
+        backgroundColor: PRIMARYCOLOR.ORANGE,
     },
     button: {
         marginTop: '0%',
@@ -13,4 +14,25 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         textAlign: 'center'
     },
+    logoBody: {
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center'
+    },
+    formBody: {
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center'
+    },
+    bodyFoot: { 
+        flex: 1, 
+        alignItems: 'center' 
+    },
+    getStartTxtBody: {
+        position: 'absolute', 
+        bottom: 20 
+    },
+    getStartTxt: {
+        fontSize: 18
+    }
 })

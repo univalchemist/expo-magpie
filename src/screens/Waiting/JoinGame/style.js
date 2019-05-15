@@ -1,20 +1,35 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { PRIMARYCOLOR } from '../../../global/style';
 const { width, height } = Dimensions.get('window');
 export const styles = StyleSheet.create({
     contentStyle: {
         flex: 1,
         alignItems: 'center',
     },
-    container: {
+    bodyContent: {
+        backgroundColor: 'transparent',
+        paddingTop: 20,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        flex: 1
     },
-    itemContainer: {
-        width: width / 2,
-        marginBottom: 30,
+    bodyHeaderTxt: {
+        fontWeight: 'bold',
+        fontSize: 18
+    },
+    bodyFoot: {
+        paddingBottom: 5, 
+        paddingHorizontal: 5, 
+        position: 'absolute', 
+        bottom: 50
+    },
+    joinTxt: {
+        color: PRIMARYCOLOR.BLUE,
+        fontSize: 20,
+        textAlign: 'center'
     },
     activeButton: {
-        backgroundColor: '#CFFFE5',//#CFFFE5
+        backgroundColor: PRIMARYCOLOR.ORANGE,
     },
     disableButton: {
         backgroundColor: 'grey',

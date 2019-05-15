@@ -43,15 +43,15 @@ class WaitingRoom extends React.Component {
                 <Content contentContainerStyle={styles.contentStyle}>
                     <View style={{ alignItems: 'center' }}>
                         <View >
-                            <Text style={{ fontWeight: 'bold', fontSize: 18 }}>WAITING ROOM</Text>
+                            <Text style={styles.bodyHeaderTxt}>{'WAITING ROOM'}</Text>
                         </View>
                     </View>
-                    <View style={{ backgroundColor: 'tranparent', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                    <View style={styles.bodyContent}>
                         <View>
                             <Image resizeMode="cover" source={images.iconFinder} />
                         </View>
                         <View style={{ marginTop: 20 }}>
-                            <Text style={{ fontSize: 18, color: 'red' }}>{'Next game starts in '}{startTime}</Text>
+                            <Text style={styles.startTxt}>{'Next game starts in '}{startTime}</Text>
                         </View>
                     </View>
                 </Content>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Header, Left, Body, Right, Button, Icon, Text, Thumbnail } from "native-base";
+import { PRIMARYCOLOR } from '../global/style';
 const goback = (props) => {
     props.navigation.goBack()
 }
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0
     },
     body: {
-        flex: 3,
+        flex: 1,
         alignItems: 'center',
         backgroundColor: 'transparent',
     },
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     rightTxtStyle: {
-        color: 'red',
+        color: PRIMARYCOLOR.BLUE,
         fontSize: 12,
     }
 })

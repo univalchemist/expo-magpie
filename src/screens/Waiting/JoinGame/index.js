@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, Dimensions, StatusBar, FlatList, Image, ImageBackground } from 'react-native';
+import { View, Text, Dimensions, StatusBar } from 'react-native';
 import { Container, Content, Button } from 'native-base';
-import Dialog, { DialogFooter, DialogButton, DialogContent, DialogTitle } from 'react-native-popup-dialog';
+import Dialog, { DialogContent } from 'react-native-popup-dialog';
 import { styles } from './style';
 import { HeaderContainer } from '../../../components/header';
 
@@ -44,14 +44,14 @@ class JoinGame extends React.Component {
                 <Content contentContainerStyle={styles.contentStyle}>
                     <View style={{ alignItems: 'center' }}>
                         <View >
-                            <Text style={{ fontWeight: 'bold', fontSize: 18 }}>WAITING ROOM</Text>
+                            <Text style={styles.bodyHeaderTxt}>{'WAITING ROOM'}</Text>
                         </View>
                     </View>
-                    <View style={{ backgroundColor: 'tranparent', paddingTop: 20, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                    <View style={styles.bodyContent}>
                         <View >
-                            <Text style={{ fontSize: 20, color: 'red' }}>{'A new game has begun'}</Text>
+                            <Text style={styles.joinTxt}>{'A new game has begun'}</Text>
                         </View>
-                        <View style={{ paddingBottom: 5, paddingHorizontal: 5, position: 'absolute', bottom: 50 }}>
+                        <View style={styles.bodyFoot}>
                             <Button block style={[styles.button, styles.activeButton]} onPress={this.onActionJoin} >
                                 <Text style={styles.buttonColor}> Join Game </Text>
                             </Button>
@@ -66,15 +66,15 @@ class JoinGame extends React.Component {
                 >
                     <DialogContent>
                         <View style={{ marginTop: 50, paddingHorizontal: 20 }}>
-                            <Text style={{ fontSize: 20, color: 'red' }}>{'You have been invited to vote'}</Text>
+                            <Text style={styles.joinTxt}>{' You have been '}{'\n'}{' invited to vote '}</Text>
                         </View>
-                        <View style={{ marginTop: 50, paddingHorizontal: 30 }}>
+                        <View style={{ marginTop: 30, paddingHorizontal: 20 }}>
                             <Button block style={[styles.button, styles.activeButton]} onPress={this.onTapJoin} >
                                 <Text style={styles.joinBtnTxtColor}> Join </Text>
                             </Button>
                         </View>
 
-                        <View style={{ marginTop: 20, marginBottom: 20, paddingHorizontal: 30 }}>
+                        <View style={{ marginTop: 20, marginBottom: 20, paddingHorizontal: 20 }}>
                             <Button block style={[styles.button, styles.disableButton]} onPress={this.onTapDecline} >
                                 <Text style={styles.declineBtnTxtColor}> Decline </Text>
                             </Button>
